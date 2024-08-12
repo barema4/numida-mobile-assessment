@@ -1,50 +1,24 @@
-# Welcome to your Expo app 👋
+### How can one run this app
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+* Clone repository ```https://github.com/barema4/numida-mobile-assessment ```
+* Cd into ```numida-mobile``` sub-folder
+* Run the `yarn or npm install` in the terminal  to install the  project dependencies
+* Start the app by running
+    ```bash
+    npx expo start or npm start
+     ```
 
-## Get started
+* I have deployed the backend server on ```render.com``` so no need to run it locally
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+###  A brief description of My approach
+*  I have leveraged  React Native’s component-based architecture to build reusable UI components that ensure consistency across the application.
 
-2. Start the app
+* I have followed  best practices like using TypeScript for type safety, Redux for state management, and React hooks for managing  state logic.
 
-   ```bash
-    npx expo start
-   ```
+* For testing , I have used  React Native Testing Library and Jest, ensuring that components and logic are robust and reliable
 
-In the output, you'll find options to open the app in a
+*  I have deployed the backend on render.com to ensure smooth running of the application with out setting up the server
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
