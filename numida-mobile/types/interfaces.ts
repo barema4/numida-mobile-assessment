@@ -6,6 +6,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type RootStackParamList = {
   LoanApplicationForm: undefined;
   Dashboard: undefined;
+  LoanApplicationList: undefined;
 };
 
 type DashboardProps = NativeStackScreenProps<RootStackParamList, "Dashboard">;
@@ -13,5 +14,14 @@ type LoanApplicationFormProps = NativeStackScreenProps<
   RootStackParamList,
   "LoanApplicationForm"
 >;
+type LoanApplicationListProps = NativeStackScreenProps<
+  RootStackParamList,
+  "LoanApplicationList"
+>;
 
-export { RootStackParamList, DashboardProps, LoanApplicationFormProps };
+export {
+  RootStackParamList,
+  DashboardProps,
+  LoanApplicationFormProps,
+  LoanApplicationListProps,
+};

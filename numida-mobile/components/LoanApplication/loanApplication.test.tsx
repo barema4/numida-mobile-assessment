@@ -1,23 +1,19 @@
-import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react-native';
-import { Provider } from 'react-redux';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import configureStore from 'redux-mock-store';
-import LoanApplicationForm from './index';
+import { MockedProvider } from "@apollo/client/testing";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
+import LoanApplicationForm from "./index";
 
 type RootStackParamList = {
   Dashboard: undefined;
   LoanApplicationForm: undefined;
+  LoanApplicationList: undefined;
 };
 
 type MockRouteProp = RouteProp<RootStackParamList, "LoanApplicationForm">;
-
-type MockNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "LoanApplicationForm"
->;
-
 
 const mockRoute: MockRouteProp = {
   key: "LoanApplicationForm",
@@ -27,7 +23,10 @@ const mockRoute: MockRouteProp = {
 
 const mockNavigate = jest.fn();
 //@ts-ignore
-const mockNavigation: MockNavigationProp = {
+const mockNavigation: NativeStackNavigationProp<
+  RootStackParamList,
+  "LoanApplicationForm"
+> = {
   navigate: mockNavigate,
   goBack: jest.fn(),
   reset: jest.fn(),
@@ -41,88 +40,71 @@ const mockNavigation: MockNavigationProp = {
   getState: jest.fn(),
 };
 
-
-
 const mockStore = configureStore([]);
-const store = mockStore({
-  applyForLoan: { isLoading: false, error: null },
-});
 
+describe("LoanApplicationForm", () => {
+  let store: any;
 
-describe('LoanApplicationForm', () => {
   beforeEach(() => {
-    mockNavigate.mockClear();
+    store = mockStore({
+      applyForLoan: {
+        isLoading: false,
+        error: null,
+      },
+    });
   });
 
-  it('renders the loan application form', () => {
-    render(
+  test("renders correctly", () => {
+    const { getByText, getByPlaceholderText } = render(
       <Provider store={store}>
         <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
-      </Provider>
+      </Provider>,
     );
 
-    expect(screen.getByPlaceholderText('Name')).toBeTruthy();
-    expect(screen.getByPlaceholderText('Email')).toBeTruthy();
-    expect(screen.getByPlaceholderText('Loan Amount')).toBeTruthy();
-    expect(screen.getByPlaceholderText('Loan Purpose')).toBeTruthy();
+    const headingElement = getByText("Apply for a loan");
+    const fullNameInput = getByPlaceholderText("Name");
+    const emailInput = getByPlaceholderText("Email");
+    const loanAmountInput = getByPlaceholderText("Loan Amount");
+    const loanPurposeInput = getByPlaceholderText("Loan Purpose");
+    const submitButton = getByText("SUBMIT");
+
+    expect(headingElement).toBeTruthy();
+    expect(fullNameInput).toBeTruthy();
+    expect(emailInput).toBeTruthy();
+    expect(loanAmountInput).toBeTruthy();
+    expect(loanPurposeInput).toBeTruthy();
+    expect(submitButton).toBeTruthy();
   });
 
-  // it('shows validation errors when form is submitted with empty fields', async () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
-  //     </Provider>
-  //   );
+  test("disables submit button when form fields are empty", () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
+      </Provider>,
+    );
 
-  //   fireEvent.press(screen.getByText('SUBMIT'));
+    const submitButton = getByTestId("button");
+    expect(submitButton.props.accessibilityState.disabled).toBe(true);
+  });
 
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Full Name is required')).toBeTruthy();
-  //     expect(screen.getByText('Email is required')).toBeTruthy();
-  //     expect(screen.getByText('Loan Amount is required')).toBeTruthy();
-  //     expect(screen.getByText('Loan Purpose is required')).toBeTruthy();
-  //   });
-  // });
+  test("enables submit button when form fields are filled", () => {
+    const { getByTestId, getByPlaceholderText } = render(
+      <Provider store={store}>
+        <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
+      </Provider>,
+    );
 
-  // it('handles form submission with valid data', async () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
-  //     </Provider>
-  //   );
+    const fullNameInput = getByPlaceholderText("Name");
+    const emailInput = getByPlaceholderText("Email");
+    const loanAmountInput = getByPlaceholderText("Loan Amount");
+    const loanPurposeInput = getByPlaceholderText("Loan Purpose");
+    const submitButton = getByTestId("button");
 
-  //   fireEvent.changeText(screen.getByPlaceholderText('Name'), 'John Doe');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Email'), 'john@example.com');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Loan Amount'), '5000');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Loan Purpose'), 'Business');
+    fireEvent.changeText(fullNameInput, "John Doe");
+    fireEvent.changeText(emailInput, "john.doe@example.com");
+    fireEvent.changeText(loanAmountInput, "1000");
+    fireEvent.changeText(loanPurposeInput, "Personal");
 
-  //   fireEvent.press(screen.getByText('SUBMIT'));
-
-  //   await waitFor(() => {
-  //     expect(mockNavigate).toHaveBeenCalledWith('Dashboard');
-  //   });
-  // });
-
-  // it('displays server error message if the submission fails', async () => {
-  //   const errorStore = mockStore({
-  //     applyForLoan: { isLoading: false, error: 'Server error' },
-  //   });
-
-  //   render(
-  //     <Provider store={errorStore}>
-  //       <LoanApplicationForm navigation={mockNavigation} route={mockRoute} />
-  //     </Provider>
-  //   );
-
-  //   fireEvent.changeText(screen.getByPlaceholderText('Name'), 'John Doe');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Email'), 'john@example.com');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Loan Amount'), '5000');
-  //   fireEvent.changeText(screen.getByPlaceholderText('Loan Purpose'), 'Business');
-
-  //   fireEvent.press(screen.getByText('SUBMIT'));
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Error: Server error')).toBeTruthy();
-  //   });
-  // });
+    expect(submitButton.props.accessibilityState.disabled).toBe(false);
+  });
 });

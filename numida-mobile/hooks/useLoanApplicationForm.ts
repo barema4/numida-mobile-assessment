@@ -11,6 +11,13 @@ const useLoanApplicationForm = () => {
   const [loanAmount, setLoanAmount] = useState("");
   const [loanPurpose, setLoanPurpose] = useState("");
 
+  const clearState = () => {
+    setFullName("");
+    setEmail("");
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+
   return {
     fullName,
     email,
@@ -20,6 +27,7 @@ const useLoanApplicationForm = () => {
     setEmail,
     setLoanAmount,
     setLoanPurpose,
+    clearState,
   };
 };
 

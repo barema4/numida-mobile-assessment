@@ -31,6 +31,7 @@ const LoanApplicationForm = ({ navigation }: LoanApplicationFormProps) => {
     setEmail,
     setLoanAmount,
     setLoanPurpose,
+    clearState,
   } = useLoanApplicationForm();
 
   const dispatch = useDispatch<Dispatch>();
@@ -40,7 +41,6 @@ const LoanApplicationForm = ({ navigation }: LoanApplicationFormProps) => {
   );
 
   const handleSubmit = useCallback(() => {
-    console.log(validate(), "validate");
     if (!validate()) {
       Alert.alert("Form contains errors", "Please correct the errors");
       return;
@@ -52,7 +52,8 @@ const LoanApplicationForm = ({ navigation }: LoanApplicationFormProps) => {
       loan_purpose: loanPurpose,
     };
     dispatch.applyForLoan.applyForLoan(loanApplicationData);
-    navigation.navigate("Dashboard");
+    clearState();
+    navigation.navigate("LoanApplicationList");
   }, [fullName, email, loanAmount, loanPurpose, dispatch]);
 
   const validateEmail = (email: string) => {

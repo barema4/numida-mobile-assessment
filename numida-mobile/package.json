@@ -13,7 +13,10 @@
     "format": "npx prettier --write ."
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-redux)/"
+    ]
   },
   "dependencies": {
     "@apollo/client": "^3.11.4",

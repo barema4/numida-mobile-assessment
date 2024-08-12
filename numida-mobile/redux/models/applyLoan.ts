@@ -33,7 +33,7 @@ export const applyForLoan = createModel<RootModel>()({
         dispatch.applyForLoan.setLoading(true);
         dispatch.applyForLoan.setError(null);
         const response = await axios.post(
-          `http://192.168.1.2:8000/apply-loan`,
+          `http://192.168.1.3:8000/apply-loan`,
           payload,
         );
         dispatch.applyForLoan.setSuccess(true);

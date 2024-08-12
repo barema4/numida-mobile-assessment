@@ -16,4 +16,16 @@ const LOAN_PRODUCTS_QUERY = gql`
   }
 `;
 
-export { LOAN_PRODUCTS_QUERY };
+const GET_LOAN_APPLICATIONS = gql`
+  query LoanApplications {
+    loanApplications {
+      id
+      fullName
+      email
+      loanAmount
+      loanPurpose
+    }
+  }
+`;
+
+export { LOAN_PRODUCTS_QUERY, GET_LOAN_APPLICATIONS };

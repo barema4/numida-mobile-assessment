@@ -8,8 +8,8 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
  * @returns A new Apollo client instance.
  */
 const client = new ApolloClient({
+  uri: "http://192.168.1.3:8000/graphql",
   cache: new InMemoryCache(),
-  uri: "http://192.168.1.2:8000/graphql",
 });
 
 export default client;

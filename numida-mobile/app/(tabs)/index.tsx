@@ -7,6 +7,7 @@ import { store } from "../../redux/store/store";
 
 import Dashboard from "../../components/Dashboard";
 import LoanApplicationForm from "../../components/LoanApplication";
+import LoanApplicationList from "../../components/LoanApplicationList";
 
 import { RootStackParamList } from "../../types/interfaces";
 
@@ -27,6 +28,10 @@ const App = () => {
           <Stack.Screen
             name="LoanApplicationForm"
             component={LoanApplicationForm}
+          />
+          <Stack.Screen
+            name="LoanApplicationList"
+            component={LoanApplicationList}
           />
         </Stack.Navigator>
       </Provider>
