@@ -8,7 +8,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
  * @returns A new Apollo client instance.
  */
 const client = new ApolloClient({
-  uri: "http://192.168.1.3:8000/graphql",
+  uri: "https://numidaserver-latest.onrender.com/graphql",
   cache: new InMemoryCache(),
 });
 
